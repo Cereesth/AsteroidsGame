@@ -1,10 +1,9 @@
 using Godot;
-using System;
 
 public partial class Player : CharacterBody2D
 {
 
-    #region Variables
+    #region Properties
     [Export] private float Speed { get; set; } = 300.0f;
     [Export] private Node2D Target { get; set; }
     [Export] private PackedScene LaserScene { get; set; }
@@ -30,8 +29,8 @@ public partial class Player : CharacterBody2D
 
         if (direction != Vector2.Zero)
         {
-            newVelocity.X = direction.X * Speed * Convert.ToSingle(delta);
-            newVelocity.Y = direction.Y * Speed * Convert.ToSingle(delta);
+            newVelocity.X = direction.X * Speed * (float)delta;
+            newVelocity.Y = direction.Y * Speed * (float)delta;
         }
         else
         {
@@ -52,19 +51,11 @@ public partial class Player : CharacterBody2D
     {
         Laser laser = LaserScene.Instantiate<Laser>();
 
-        laser.Rotation = ShootPoint.Rotation;
-        laser.Position = ShootPoint.Position;
-
-        laser.GlobalPosition = ShootPoint.GlobalPosition;
-        laser.GlobalRotation = ShootPoint.GlobalRotation;
+        laser.Rotation = ShootPoint.GlobalRotation;
+        laser.Position = ShootPoint.GlobalPosition;
 
         ShootPoint.AddChild(laser);
     }
     #endregion
-
-
-
-
-
 
 }
