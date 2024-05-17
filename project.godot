@@ -27,6 +27,10 @@ window/vsync/vsync_mode=0
 
 project/assembly_name="Asteroids"
 
+[editor]
+
+movie_writer/movie_file="D:/GameDev/Godot/Games/Asteroids/movies/output.avi"
+
 [input]
 
 MoveLeft={
