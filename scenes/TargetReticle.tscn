@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bulps41cimulh"]
+
+[ext_resource type="Texture2D" uid="uid://bdxaym858jbjx" path="res://assets/crosshairs-pack-1.00/crosshairs/circle/circle-5.png" id="1_hqq63"]
+[ext_resource type="Script" path="res://scripts/TargetReticle.cs" id="1_nlpqa"]
+
+[node name="TargetReticle" type="Node2D"]
+script = ExtResource("1_nlpqa")
+
+[node name="Image" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_hqq63")
