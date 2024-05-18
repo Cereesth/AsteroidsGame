@@ -20,7 +20,8 @@ public partial class Laser : Area2D
 
         if (area is BigAsteroid)
         {
-            //GD.Print("Hit asteroid");
+            BigAsteroid asteroid = (BigAsteroid)area;
+            asteroid.HealthSystem.TakeDamage(1);
         }
     }
 }

@@ -1,11 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://cu75vkjfthhtc"]
+[gd_scene load_steps=12 format=3 uid="uid://cu75vkjfthhtc"]
 
 [ext_resource type="Script" path="res://scripts/Game.cs" id="1_kab5v"]
 [ext_resource type="PackedScene" uid="uid://cdkywx2xspk20" path="res://scenes/Player.tscn" id="1_koowb"]
 [ext_resource type="PackedScene" uid="uid://bulps41cimulh" path="res://scenes/TargetReticle.tscn" id="2_au2p8"]
 [ext_resource type="Script" path="res://scripts/LaserBoundary.cs" id="4_8jggo"]
 [ext_resource type="PackedScene" uid="uid://krlsmg8vbqnr" path="res://scenes/AsteroidManager.tscn" id="4_646f5"]
-[ext_resource type="PackedScene" uid="uid://e6s88d1tmbrw" path="res://scenes/BigAsteroid.tscn" id="6_o610a"]
 [ext_resource type="Script" path="res://scripts/AsteroidSpawnArea.cs" id="7_qho0k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dlobl"]
@@ -65,15 +64,20 @@ AsteroidSpawnArea = NodePath("../AsteroidSpawnArea")
 [node name="TotalBoundaryArea" type="Area2D" parent="."]
 visible = false
 position = Vector2(960, 540)
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
 
 [node name="TotalBoundaryArea" type="CollisionShape2D" parent="TotalBoundaryArea"]
 shape = SubResource("RectangleShape2D_m5f62")
 disabled = true
 
-[node name="BigAsteroid" parent="." instance=ExtResource("6_o610a")]
-position = Vector2(63, 1150)
-
 [node name="AsteroidSpawnArea" type="Area2D" parent="." node_paths=PackedStringArray("SpawnAreas")]
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
 script = ExtResource("7_qho0k")
 SpawnAreas = [NodePath("CollisionShape2D"), NodePath("CollisionShape2D2"), NodePath("CollisionShape2D3"), NodePath("CollisionShape2D4")]
 
@@ -95,3 +99,4 @@ shape = SubResource("RectangleShape2D_l7313")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
+zoom = Vector2(0.745, 0.745)
