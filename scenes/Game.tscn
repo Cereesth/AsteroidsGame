@@ -1,11 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://cu75vkjfthhtc"]
+[gd_scene load_steps=7 format=3 uid="uid://cu75vkjfthhtc"]
 
 [ext_resource type="Script" path="res://scripts/Game.cs" id="1_kab5v"]
 [ext_resource type="PackedScene" uid="uid://cdkywx2xspk20" path="res://scenes/Player.tscn" id="1_koowb"]
 [ext_resource type="PackedScene" uid="uid://bulps41cimulh" path="res://scenes/TargetReticle.tscn" id="2_au2p8"]
+[ext_resource type="PackedScene" uid="uid://krlsmg8vbqnr" path="res://scenes/AsteroidManager.tscn" id="4_646f5"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bkdhu"]
-size = Vector2(2071, 1188)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dlobl"]
+size = Vector2(2070, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xrqhc"]
+size = Vector2(20, 1200)
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("LaserBoundary")]
 script = ExtResource("1_kab5v")
@@ -21,6 +25,24 @@ position = Vector2(945, 315)
 
 [node name="LaserBoundary" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LaserBoundary"]
-position = Vector2(960, 540)
-shape = SubResource("RectangleShape2D_bkdhu")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="LaserBoundary"]
+position = Vector2(960, -50)
+shape = SubResource("RectangleShape2D_dlobl")
+debug_color = Color(0.918007, 0.253184, 0.34275, 0.42)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="LaserBoundary"]
+position = Vector2(960, 1130)
+shape = SubResource("RectangleShape2D_dlobl")
+debug_color = Color(0.918007, 0.253184, 0.34275, 0.42)
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="LaserBoundary"]
+position = Vector2(-65, 540)
+shape = SubResource("RectangleShape2D_xrqhc")
+debug_color = Color(0.918007, 0.253184, 0.34275, 0.42)
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="LaserBoundary"]
+position = Vector2(1985, 540)
+shape = SubResource("RectangleShape2D_xrqhc")
+debug_color = Color(0.918007, 0.253184, 0.34275, 0.42)
+
+[node name="AsteroidManager" parent="." instance=ExtResource("4_646f5")]
