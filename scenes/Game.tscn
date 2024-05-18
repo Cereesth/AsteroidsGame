@@ -1,15 +1,27 @@
-[gd_scene load_steps=7 format=3 uid="uid://cu75vkjfthhtc"]
+[gd_scene load_steps=13 format=3 uid="uid://cu75vkjfthhtc"]
 
 [ext_resource type="Script" path="res://scripts/Game.cs" id="1_kab5v"]
 [ext_resource type="PackedScene" uid="uid://cdkywx2xspk20" path="res://scenes/Player.tscn" id="1_koowb"]
 [ext_resource type="PackedScene" uid="uid://bulps41cimulh" path="res://scenes/TargetReticle.tscn" id="2_au2p8"]
+[ext_resource type="Script" path="res://scripts/LaserBoundary.cs" id="4_8jggo"]
 [ext_resource type="PackedScene" uid="uid://krlsmg8vbqnr" path="res://scenes/AsteroidManager.tscn" id="4_646f5"]
+[ext_resource type="PackedScene" uid="uid://e6s88d1tmbrw" path="res://scenes/BigAsteroid.tscn" id="6_o610a"]
+[ext_resource type="Script" path="res://scripts/AsteroidSpawnArea.cs" id="7_qho0k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dlobl"]
-size = Vector2(2070, 20)
+size = Vector2(2200, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xrqhc"]
-size = Vector2(20, 1200)
+size = Vector2(20, 1400)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m5f62"]
+size = Vector2(2200, 1400)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_al08y"]
+size = Vector2(1, 1220)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l7313"]
+size = Vector2(2044, 1)
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("LaserBoundary")]
 script = ExtResource("1_kab5v")
@@ -23,26 +35,63 @@ Target = NodePath("../TargetReticle")
 [node name="TargetReticle" parent="." instance=ExtResource("2_au2p8")]
 position = Vector2(945, 315)
 
-[node name="LaserBoundary" type="Area2D" parent="."]
+[node name="LaserBoundary" type="Area2D" parent="." node_paths=PackedStringArray("TotalBoundaryArea")]
+script = ExtResource("4_8jggo")
+TotalBoundaryArea = NodePath("../TotalBoundaryArea/TotalBoundaryArea")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="LaserBoundary"]
-position = Vector2(960, -50)
+[node name="BoundaryTop" type="CollisionShape2D" parent="LaserBoundary"]
+position = Vector2(960, -150)
 shape = SubResource("RectangleShape2D_dlobl")
 debug_color = Color(0.918007, 0.253184, 0.34275, 0.42)
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="LaserBoundary"]
-position = Vector2(960, 1130)
+[node name="BoundaryBottom" type="CollisionShape2D" parent="LaserBoundary"]
+position = Vector2(960, 1230)
 shape = SubResource("RectangleShape2D_dlobl")
 debug_color = Color(0.918007, 0.253184, 0.34275, 0.42)
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="LaserBoundary"]
-position = Vector2(-65, 540)
+[node name="BoundaryLeft" type="CollisionShape2D" parent="LaserBoundary"]
+position = Vector2(-130, 540)
 shape = SubResource("RectangleShape2D_xrqhc")
 debug_color = Color(0.918007, 0.253184, 0.34275, 0.42)
 
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="LaserBoundary"]
-position = Vector2(1985, 540)
+[node name="BoundaryRight" type="CollisionShape2D" parent="LaserBoundary"]
+position = Vector2(2050, 540)
 shape = SubResource("RectangleShape2D_xrqhc")
 debug_color = Color(0.918007, 0.253184, 0.34275, 0.42)
 
-[node name="AsteroidManager" parent="." instance=ExtResource("4_646f5")]
+[node name="AsteroidManager" parent="." node_paths=PackedStringArray("AsteroidSpawnArea") instance=ExtResource("4_646f5")]
+AsteroidSpawnArea = NodePath("../AsteroidSpawnArea")
+
+[node name="TotalBoundaryArea" type="Area2D" parent="."]
+visible = false
+position = Vector2(960, 540)
+
+[node name="TotalBoundaryArea" type="CollisionShape2D" parent="TotalBoundaryArea"]
+shape = SubResource("RectangleShape2D_m5f62")
+disabled = true
+
+[node name="BigAsteroid" parent="." instance=ExtResource("6_o610a")]
+position = Vector2(63, 1150)
+
+[node name="AsteroidSpawnArea" type="Area2D" parent="." node_paths=PackedStringArray("SpawnAreas")]
+script = ExtResource("7_qho0k")
+SpawnAreas = [NodePath("CollisionShape2D"), NodePath("CollisionShape2D2"), NodePath("CollisionShape2D3"), NodePath("CollisionShape2D4")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AsteroidSpawnArea"]
+position = Vector2(-64, 540)
+shape = SubResource("RectangleShape2D_al08y")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="AsteroidSpawnArea"]
+position = Vector2(1980, 540)
+shape = SubResource("RectangleShape2D_al08y")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="AsteroidSpawnArea"]
+position = Vector2(958, -70)
+shape = SubResource("RectangleShape2D_l7313")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="AsteroidSpawnArea"]
+position = Vector2(958, 1149)
+shape = SubResource("RectangleShape2D_l7313")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)

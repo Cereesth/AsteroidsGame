@@ -6,8 +6,9 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_rbsra"]
 radius = 50.0
 
-[node name="BigAsteroid" type="Area2D"]
+[node name="BigAsteroid" type="Area2D" node_paths=PackedStringArray("ColliderShape")]
 script = ExtResource("1_hssbn")
+ColliderShape = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
