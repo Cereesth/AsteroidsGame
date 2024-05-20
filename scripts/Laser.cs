@@ -27,5 +27,10 @@ public partial class Laser : Area2D
             BigAsteroid asteroid = (BigAsteroid)area;
             asteroid.HealthSystem.TakeDamage(1);
         }
+        else if (area is MediumAsteroid)
+        {
+            MediumAsteroid asteroid = (MediumAsteroid)area;
+            asteroid.HealthSystem.TakeDamage(1);
+        }
     }
 }

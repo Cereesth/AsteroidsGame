@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Runtime.InteropServices;
 
 public partial class AsteroidManager : Node
 {
@@ -10,6 +11,8 @@ public partial class AsteroidManager : Node
     [Export] private Timer SpawnTimer;
     [Export] private AsteroidSpawnArea AsteroidSpawnArea;
     [Export] private Marker2D PlayAreaOrigin;
+    [Export] private float BigAsteroidChance = 50;
+    [Export] private float MediumAsteroidChance = 50;
 
     private Vector2 ScreenSize;
 
@@ -32,6 +35,24 @@ public partial class AsteroidManager : Node
 
     private void SpawnTimer_Timeout()
     {
+        float randomPercent = (float)GD.RandRange(1.0, 100.0);
+
+        if (randomPercent <= BigAsteroidChance)
+        {
+            SpawnBigAsteroid();
+        }
+        else if (randomPercent <= MediumAsteroidChance + BigAsteroidChance)
+        {
+            SpawnMediumAsteroid();
+        }
+        else
+        {
+            throw new Exception();
+        }
+    }
+
+    private void SpawnBigAsteroid()
+    {
         BigAsteroid asteroid = BigAsteroid.Instantiate<BigAsteroid>();
 
         asteroid.GlobalPosition = GetRandomPoint();
@@ -41,7 +62,27 @@ public partial class AsteroidManager : Node
         AddChild(asteroid);
     }
 
+    private void SpawnMediumAsteroid()
+    {
+        MediumAsteroid asteroid = MediumAsteroid.Instantiate<MediumAsteroid>();
+
+        asteroid.GlobalPosition = GetRandomPoint();
+
+        asteroid.SetDirection(GetRandomDirection(asteroid));
+
+        AddChild(asteroid);
+    }
+
     private Vector2 GetRandomDirection(in BigAsteroid asteroid)
+    {
+        Vector2 directionToOrigin = asteroid.Position.DirectionTo(PlayAreaOrigin.GlobalPosition);
+        Vector2 directionMinus = directionToOrigin.Rotated(Mathf.DegToRad(-45));
+        Vector2 directionPlus = directionToOrigin.Rotated(Mathf.DegToRad(45));
+        Vector2 randomDirection = new Vector2((float)GD.RandRange(directionMinus.X, directionPlus.X), (float)GD.RandRange(directionMinus.Y, directionPlus.Y)).Normalized();
+        return randomDirection;
+    }
+
+    private Vector2 GetRandomDirection(in MediumAsteroid asteroid)
     {
         Vector2 directionToOrigin = asteroid.Position.DirectionTo(PlayAreaOrigin.GlobalPosition);
         Vector2 directionMinus = directionToOrigin.Rotated(Mathf.DegToRad(-45));
