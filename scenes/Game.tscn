@@ -58,8 +58,9 @@ position = Vector2(2050, 540)
 shape = SubResource("RectangleShape2D_xrqhc")
 debug_color = Color(0.918007, 0.253184, 0.34275, 0.42)
 
-[node name="AsteroidManager" parent="." node_paths=PackedStringArray("AsteroidSpawnArea") instance=ExtResource("4_646f5")]
+[node name="AsteroidManager" parent="." node_paths=PackedStringArray("AsteroidSpawnArea", "PlayAreaOrigin") instance=ExtResource("4_646f5")]
 AsteroidSpawnArea = NodePath("../AsteroidSpawnArea")
+PlayAreaOrigin = NodePath("../PlayAreaOrigin")
 
 [node name="TotalBoundaryArea" type="Area2D" parent="."]
 visible = false
@@ -99,4 +100,6 @@ shape = SubResource("RectangleShape2D_l7313")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
-zoom = Vector2(0.745, 0.745)
+
+[node name="PlayAreaOrigin" type="Marker2D" parent="."]
+position = Vector2(960, 540)

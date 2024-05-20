@@ -9,6 +9,7 @@ public partial class AsteroidManager : Node
     [Export] private PackedScene TinyAsteroid;
     [Export] private Timer SpawnTimer;
     [Export] private AsteroidSpawnArea AsteroidSpawnArea;
+    [Export] private Marker2D PlayAreaOrigin;
 
     private Vector2 ScreenSize;
 
@@ -27,15 +28,25 @@ public partial class AsteroidManager : Node
         float randomX = (float)GD.RandRange(randomArea.GlobalPosition.X - (randomAreaSize.X / 2), randomArea.GlobalPosition.X + (randomAreaSize.X / 2));
         float randomY = (float)GD.RandRange(randomArea.GlobalPosition.Y - (randomAreaSize.Y / 2), randomArea.GlobalPosition.Y + (randomAreaSize.Y / 2));
         return new Vector2(randomX, randomY);
-        //return new Vector2((float)GD.RandRange(0, ScreenSize.X), (float)GD.RandRange(0, ScreenSize.Y));
     }
 
     private void SpawnTimer_Timeout()
     {
         BigAsteroid asteroid = BigAsteroid.Instantiate<BigAsteroid>();
 
-        asteroid.Position = GetRandomPoint();
+        asteroid.GlobalPosition = GetRandomPoint();
+
+        asteroid.SetDirection(GetRandomDirection(asteroid));
 
         AddChild(asteroid);
+    }
+
+    private Vector2 GetRandomDirection(in BigAsteroid asteroid)
+    {
+        Vector2 directionToOrigin = asteroid.Position.DirectionTo(PlayAreaOrigin.GlobalPosition);
+        Vector2 directionMinus = directionToOrigin.Rotated(Mathf.DegToRad(-45));
+        Vector2 directionPlus = directionToOrigin.Rotated(Mathf.DegToRad(45));
+        Vector2 randomDirection = new Vector2((float)GD.RandRange(directionMinus.X, directionPlus.X), (float)GD.RandRange(directionMinus.Y, directionPlus.Y)).Normalized();
+        return randomDirection;
     }
 }
