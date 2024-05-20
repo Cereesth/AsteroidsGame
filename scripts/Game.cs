@@ -17,9 +17,9 @@ public partial class Game : Node2D
         {
             area.QueueFree();
         }
-        else if (area is BigAsteroid)
+        else if (area is Asteroid)
         {
-            BigAsteroid asteroid = (BigAsteroid)area;
+            Asteroid asteroid = (Asteroid)area;
 
             //Calculate mirrored position
             float xMid = LaserBoundary.TotalBoundaryArea.GlobalPosition.X;

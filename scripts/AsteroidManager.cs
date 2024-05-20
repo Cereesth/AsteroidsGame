@@ -39,11 +39,11 @@ public partial class AsteroidManager : Node
 
         if (randomPercent <= BigAsteroidChance)
         {
-            SpawnBigAsteroid();
+            SpawnAsteroid(BigAsteroid.Instantiate<Asteroid>());
         }
         else if (randomPercent <= MediumAsteroidChance + BigAsteroidChance)
         {
-            SpawnMediumAsteroid();
+            SpawnAsteroid(MediumAsteroid.Instantiate<Asteroid>());
         }
         else
         {
@@ -51,10 +51,8 @@ public partial class AsteroidManager : Node
         }
     }
 
-    private void SpawnBigAsteroid()
+    private void SpawnAsteroid(in Asteroid asteroid)
     {
-        BigAsteroid asteroid = BigAsteroid.Instantiate<BigAsteroid>();
-
         asteroid.GlobalPosition = GetRandomPoint();
 
         asteroid.SetDirection(GetRandomDirection(asteroid));
@@ -62,27 +60,7 @@ public partial class AsteroidManager : Node
         AddChild(asteroid);
     }
 
-    private void SpawnMediumAsteroid()
-    {
-        MediumAsteroid asteroid = MediumAsteroid.Instantiate<MediumAsteroid>();
-
-        asteroid.GlobalPosition = GetRandomPoint();
-
-        asteroid.SetDirection(GetRandomDirection(asteroid));
-
-        AddChild(asteroid);
-    }
-
-    private Vector2 GetRandomDirection(in BigAsteroid asteroid)
-    {
-        Vector2 directionToOrigin = asteroid.Position.DirectionTo(PlayAreaOrigin.GlobalPosition);
-        Vector2 directionMinus = directionToOrigin.Rotated(Mathf.DegToRad(-45));
-        Vector2 directionPlus = directionToOrigin.Rotated(Mathf.DegToRad(45));
-        Vector2 randomDirection = new Vector2((float)GD.RandRange(directionMinus.X, directionPlus.X), (float)GD.RandRange(directionMinus.Y, directionPlus.Y)).Normalized();
-        return randomDirection;
-    }
-
-    private Vector2 GetRandomDirection(in MediumAsteroid asteroid)
+    private Vector2 GetRandomDirection(in Asteroid asteroid)
     {
         Vector2 directionToOrigin = asteroid.Position.DirectionTo(PlayAreaOrigin.GlobalPosition);
         Vector2 directionMinus = directionToOrigin.Rotated(Mathf.DegToRad(-45));

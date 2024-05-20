@@ -22,14 +22,9 @@ public partial class Laser : Area2D
     {
         QueueFree();
 
-        if (area is BigAsteroid)
+        if (area is Asteroid)
         {
-            BigAsteroid asteroid = (BigAsteroid)area;
-            asteroid.HealthSystem.TakeDamage(1);
-        }
-        else if (area is MediumAsteroid)
-        {
-            MediumAsteroid asteroid = (MediumAsteroid)area;
+            Asteroid asteroid = (Asteroid)area;
             asteroid.HealthSystem.TakeDamage(1);
         }
     }

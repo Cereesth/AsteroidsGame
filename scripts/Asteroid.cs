@@ -1,6 +1,6 @@
-using Godot;
+﻿using Godot;
 
-public partial class MediumAsteroid : Area2D
+public partial class Asteroid : Area2D
 {
     [Export] private float MinSpeed { get; set; } = 5;
     [Export] private float MaxSpeed { get; set; } = 300;

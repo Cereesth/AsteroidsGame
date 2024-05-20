@@ -1,14 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://c3d6ry1c4vwwv"]
 
-[ext_resource type="Script" path="res://scripts/MediumAsteroid.cs" id="1_bmht0"]
 [ext_resource type="Texture2D" uid="uid://dr60ebus82iy3" path="res://assets/SpaceShooterRedux/PNG/Meteors/meteorBrown_med1.png" id="1_cq8di"]
+[ext_resource type="Script" path="res://scripts/Asteroid.cs" id="1_llwug"]
 [ext_resource type="PackedScene" uid="uid://43fiwcoxhtas" path="res://scenes/HealthSystem.tscn" id="2_cfq1r"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3q2ds"]
 radius = 34.0
 
 [node name="MediumAsteroid" type="Area2D" node_paths=PackedStringArray("ColliderShape", "HealthSystem")]
-script = ExtResource("1_bmht0")
+script = ExtResource("1_llwug")
 ColliderShape = NodePath("CollisionShape2D")
 HealthSystem = NodePath("HealthSystem")
 
