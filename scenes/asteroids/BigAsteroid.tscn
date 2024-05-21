@@ -1,14 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://e6s88d1tmbrw"]
 
-[ext_resource type="Script" path="res://scripts/Asteroid.cs" id="1_88u6a"]
-[ext_resource type="Texture2D" uid="uid://dca87rnmbukju" path="res://assets/SpaceShooterRedux/PNG/Meteors/meteorBrown_big1.png" id="1_gqnqc"]
-[ext_resource type="PackedScene" uid="uid://43fiwcoxhtas" path="res://scenes/HealthSystem.tscn" id="3_yo00r"]
+[ext_resource type="Script" path="res://scripts/Asteroid.cs" id="1_3dr2x"]
+[ext_resource type="Texture2D" uid="uid://dca87rnmbukju" path="res://assets/SpaceShooterRedux/PNG/Meteors/meteorBrown_big1.png" id="2_h0hsl"]
+[ext_resource type="PackedScene" uid="uid://43fiwcoxhtas" path="res://scenes/HealthSystem.tscn" id="3_de5nj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rbsra"]
 radius = 50.0
 
 [node name="BigAsteroid" type="Area2D" node_paths=PackedStringArray("ColliderShape", "HealthSystem")]
-script = ExtResource("1_88u6a")
+script = ExtResource("1_3dr2x")
 ColliderShape = NodePath("CollisionShape2D")
 HealthSystem = NodePath("HealthSystem")
 
@@ -18,7 +18,7 @@ shape = SubResource("CircleShape2D_rbsra")
 
 [node name="MeteorBrownBig1" type="Sprite2D" parent="."]
 position = Vector2(2, 1)
-texture = ExtResource("1_gqnqc")
+texture = ExtResource("2_h0hsl")
 
-[node name="HealthSystem" parent="." instance=ExtResource("3_yo00r")]
+[node name="HealthSystem" parent="." instance=ExtResource("3_de5nj")]
 MaxHealth = 5

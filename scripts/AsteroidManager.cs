@@ -12,14 +12,12 @@ public partial class AsteroidManager : Node
     [Export] private AsteroidSpawnArea AsteroidSpawnArea;
     [Export] private Marker2D PlayAreaOrigin;
     [Export] private float BigAsteroidChance = 50;
-    [Export] private float MediumAsteroidChance = 50;
-
-    private Vector2 ScreenSize;
+    [Export] private float MediumAsteroidChance = 30;
+    [Export] private float SmallAsteroidChance = 20;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        ScreenSize = GetViewport().GetVisibleRect().Size;
         SpawnTimer.Timeout += SpawnTimer_Timeout;
     }
 
@@ -37,6 +35,7 @@ public partial class AsteroidManager : Node
     {
         float randomPercent = (float)GD.RandRange(1.0, 100.0);
 
+        //TODO: There's got to be a better way to do this
         if (randomPercent <= BigAsteroidChance)
         {
             SpawnAsteroid(BigAsteroid.Instantiate<Asteroid>());
@@ -44,6 +43,10 @@ public partial class AsteroidManager : Node
         else if (randomPercent <= MediumAsteroidChance + BigAsteroidChance)
         {
             SpawnAsteroid(MediumAsteroid.Instantiate<Asteroid>());
+        }
+        else if (randomPercent <= SmallAsteroidChance + MediumAsteroidChance + BigAsteroidChance)
+        {
+            SpawnAsteroid(SmallAsteroid.Instantiate<Asteroid>());
         }
         else
         {
