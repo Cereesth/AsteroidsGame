@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Runtime.InteropServices;
 
 public partial class AsteroidManager : Node
 {
@@ -11,9 +10,10 @@ public partial class AsteroidManager : Node
     [Export] private Timer SpawnTimer;
     [Export] private AsteroidSpawnArea AsteroidSpawnArea;
     [Export] private Marker2D PlayAreaOrigin;
-    [Export] private float BigAsteroidChance = 50;
+    [Export] private float BigAsteroidChance = 40;
     [Export] private float MediumAsteroidChance = 30;
     [Export] private float SmallAsteroidChance = 20;
+    [Export] private float TinyAsteroidChance = 10;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -39,6 +39,7 @@ public partial class AsteroidManager : Node
         if (randomPercent <= BigAsteroidChance)
         {
             SpawnAsteroid(BigAsteroid.Instantiate<Asteroid>());
+            
         }
         else if (randomPercent <= MediumAsteroidChance + BigAsteroidChance)
         {
@@ -47,6 +48,10 @@ public partial class AsteroidManager : Node
         else if (randomPercent <= SmallAsteroidChance + MediumAsteroidChance + BigAsteroidChance)
         {
             SpawnAsteroid(SmallAsteroid.Instantiate<Asteroid>());
+        }
+        else if (randomPercent <= TinyAsteroidChance + SmallAsteroidChance + MediumAsteroidChance + BigAsteroidChance)
+        {
+            SpawnAsteroid(TinyAsteroid.Instantiate<Asteroid>());
         }
         else
         {

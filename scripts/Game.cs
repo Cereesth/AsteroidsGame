@@ -26,7 +26,7 @@ public partial class Game : Node2D
             float yMid = LaserBoundary.TotalBoundaryArea.GlobalPosition.Y;
             float xReentry = (2 * xMid) - asteroid.GlobalPosition.X;
             float yReentry = (2 * yMid) - asteroid.GlobalPosition.Y;
-            float offset = -20;
+            float offset = 10;
 
             //Offset to ensure when it teleports it is not touching the boundary
             if (xReentry < xMid)

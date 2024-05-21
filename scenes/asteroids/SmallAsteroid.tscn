@@ -5,19 +5,19 @@
 [ext_resource type="Texture2D" uid="uid://cth6lmhaw0dbk" path="res://assets/SpaceShooterRedux/PNG/Meteors/meteorBrown_small1.png" id="2_8oprp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oyd0w"]
-radius = 14.0357
+radius = 14.0
 
 [node name="SmallAsteroid" type="Area2D" node_paths=PackedStringArray("ColliderShape", "HealthSystem")]
 script = ExtResource("1_8xofa")
 ColliderShape = NodePath("CollisionShape2D")
 HealthSystem = NodePath("HealthSystem")
 
+[node name="HealthSystem" parent="." instance=ExtResource("1_xwunk")]
+MaxHealth = 2
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_oyd0w")
-
-[node name="HealthSystem" parent="." instance=ExtResource("1_xwunk")]
-MaxHealth = 2
 
 [node name="MeteorBrownSmall1" type="Sprite2D" parent="."]
 texture = ExtResource("2_8oprp")
