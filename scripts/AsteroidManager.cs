@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class AsteroidManager : Node
 {
@@ -39,7 +40,6 @@ public partial class AsteroidManager : Node
         if (randomPercent <= BigAsteroidChance)
         {
             SpawnAsteroid(BigAsteroid.Instantiate<Asteroid>());
-            
         }
         else if (randomPercent <= MediumAsteroidChance + BigAsteroidChance)
         {
@@ -72,34 +72,68 @@ public partial class AsteroidManager : Node
 
     private void Asteroid_OnAsteroidDestroyed(Asteroid asteroid)
     {
-        Asteroid newAsteroid;
-
         //Unsubscribe from current asteroid event
-        asteroid.OnAsteroidDestroyed -= Asteroid_OnAsteroidDestroyed;    
+        asteroid.OnAsteroidDestroyed -= Asteroid_OnAsteroidDestroyed;
 
         switch (asteroid._AsteroidType)
         {
             case Asteroid.AsteroidType.Big:
-                newAsteroid = MediumAsteroid.Instantiate<Asteroid>();
+                SpawnAsteroidsOnAsteroidDestroyed(GetAsteroidListOnBigAsteroidDestroyed(), asteroid);
                 break;
             case Asteroid.AsteroidType.Medium:
-                newAsteroid = SmallAsteroid.Instantiate<Asteroid>();
+                SpawnAsteroidsOnAsteroidDestroyed(GetAsteroidListOnMediumAsteroidDestroyed(), asteroid);
                 break;
             case Asteroid.AsteroidType.Small:
-                newAsteroid = TinyAsteroid.Instantiate<Asteroid>();
+                SpawnAsteroidsOnAsteroidDestroyed(GetAsteroidListOnSmallAsteroidDestroyed(), asteroid);
                 break;
             case Asteroid.AsteroidType.Tiny:
             default:
                 //No new asteroid is spawned
                 return;
         }
+    }
 
-        newAsteroid.GlobalPosition = asteroid.GlobalPosition;
-        newAsteroid.SetDirection(GetRandomDirection());
+    private void SpawnAsteroidsOnAsteroidDestroyed(List<Asteroid> asteroidsToSpawn, Asteroid oldAsteroid)
+    {
+        foreach (Asteroid asteroid in asteroidsToSpawn)
+        {
+            asteroid.GlobalPosition = oldAsteroid.GlobalPosition;
+            asteroid.SetDirection(GetRandomDirection());
 
-        newAsteroid.OnAsteroidDestroyed += Asteroid_OnAsteroidDestroyed;
+            asteroid.OnAsteroidDestroyed += Asteroid_OnAsteroidDestroyed;
 
-        this.CallDeferred(Node.MethodName.AddChild, newAsteroid);
+            CallDeferred(Node.MethodName.AddChild, asteroid);
+        }
+    }
+
+    private List<Asteroid> GetAsteroidListOnBigAsteroidDestroyed()
+    {
+        return new List<Asteroid>
+        {
+            MediumAsteroid.Instantiate<Asteroid>(),
+            MediumAsteroid.Instantiate<Asteroid>()
+        };
+    }
+
+    private List<Asteroid> GetAsteroidListOnMediumAsteroidDestroyed()
+    {
+        return new List<Asteroid>
+        {
+            SmallAsteroid.Instantiate<Asteroid>(),
+            SmallAsteroid.Instantiate<Asteroid>(),
+            SmallAsteroid.Instantiate<Asteroid>(),
+            SmallAsteroid.Instantiate<Asteroid>()
+        };
+    }
+
+    private List<Asteroid> GetAsteroidListOnSmallAsteroidDestroyed()
+    {
+        return new List<Asteroid>
+        {
+            TinyAsteroid.Instantiate<Asteroid>(),
+            TinyAsteroid.Instantiate<Asteroid>(),
+            TinyAsteroid.Instantiate<Asteroid>()
+        };
     }
 
     private Vector2 GetRandomDirectionTowardsTarget(in Asteroid asteroid)
