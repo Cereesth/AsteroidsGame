@@ -11,6 +11,7 @@ radius = 34.0
 script = ExtResource("1_ngrvk")
 ColliderShape = NodePath("CollisionShape2D")
 HealthSystem = NodePath("HealthSystem")
+_AsteroidType = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_3q2ds")

@@ -63,17 +63,57 @@ public partial class AsteroidManager : Node
     {
         asteroid.GlobalPosition = GetRandomPoint();
 
-        asteroid.SetDirection(GetRandomDirection(asteroid));
+        asteroid.SetDirection(GetRandomDirectionTowardsTarget(asteroid));
 
         AddChild(asteroid);
+
+        asteroid.OnAsteroidDestroyed += Asteroid_OnAsteroidDestroyed;
     }
 
-    private Vector2 GetRandomDirection(in Asteroid asteroid)
+    private void Asteroid_OnAsteroidDestroyed(Asteroid asteroid)
+    {
+        Asteroid newAsteroid;
+
+        //Unsubscribe from current asteroid event
+        asteroid.OnAsteroidDestroyed -= Asteroid_OnAsteroidDestroyed;    
+
+        switch (asteroid._AsteroidType)
+        {
+            case Asteroid.AsteroidType.Big:
+                newAsteroid = MediumAsteroid.Instantiate<Asteroid>();
+                break;
+            case Asteroid.AsteroidType.Medium:
+                newAsteroid = SmallAsteroid.Instantiate<Asteroid>();
+                break;
+            case Asteroid.AsteroidType.Small:
+                newAsteroid = TinyAsteroid.Instantiate<Asteroid>();
+                break;
+            case Asteroid.AsteroidType.Tiny:
+            default:
+                //No new asteroid is spawned
+                return;
+        }
+
+        newAsteroid.GlobalPosition = asteroid.GlobalPosition;
+        newAsteroid.SetDirection(GetRandomDirection());
+
+        newAsteroid.OnAsteroidDestroyed += Asteroid_OnAsteroidDestroyed;
+
+        this.CallDeferred(Node.MethodName.AddChild, newAsteroid);
+    }
+
+    private Vector2 GetRandomDirectionTowardsTarget(in Asteroid asteroid)
     {
         Vector2 directionToOrigin = asteroid.Position.DirectionTo(PlayAreaOrigin.GlobalPosition);
         Vector2 directionMinus = directionToOrigin.Rotated(Mathf.DegToRad(-45));
         Vector2 directionPlus = directionToOrigin.Rotated(Mathf.DegToRad(45));
         Vector2 randomDirection = new Vector2((float)GD.RandRange(directionMinus.X, directionPlus.X), (float)GD.RandRange(directionMinus.Y, directionPlus.Y)).Normalized();
+        return randomDirection;
+    }
+
+    private Vector2 GetRandomDirection()
+    {
+        Vector2 randomDirection = new Vector2((float)GD.RandRange(-1.0, 1.0), (float)GD.RandRange(-1.0, 1.0)).Normalized();
         return randomDirection;
     }
 }

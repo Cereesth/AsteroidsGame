@@ -2,11 +2,14 @@
 
 public partial class Asteroid : Area2D
 {
+    [Signal] public delegate void OnAsteroidDestroyedEventHandler(Asteroid asteroid);
+
     [Export] private float MinSpeed { get; set; } = 5;
     [Export] private float MaxSpeed { get; set; } = 300;
     [Export] private float MaxAbsoluteRotateSpeed { get; set; } = 2;
     [Export] private CollisionShape2D ColliderShape { get; set; }
     [Export] public HealthSystem HealthSystem { get; private set; }
+    [Export] public AsteroidType _AsteroidType { get; private set; }
 
     private float RotateSpeed { get; set; }
     private float Speed { get; set; }
@@ -36,5 +39,15 @@ public partial class Asteroid : Area2D
     private void HealthSystem_OnDeath()
     {
         QueueFree();
+
+        EmitSignal(SignalName.OnAsteroidDestroyed, this);
+    }
+
+    public enum AsteroidType
+    {
+        Big,
+        Medium,
+        Small,
+        Tiny
     }
 }
