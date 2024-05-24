@@ -24,18 +24,16 @@ public partial class Player : CharacterBody2D
 
     private void HandleMovement(in double delta)
     {
-        Vector2 newVelocity = Velocity;
+        Vector2 newVelocity;
         Vector2 direction = Input.GetVector("MoveLeft", "MoveRight", "MoveUp", "MoveDown");
 
         if (direction != Vector2.Zero)
         {
-            newVelocity.X = direction.X * Speed * (float)delta;
-            newVelocity.Y = direction.Y * Speed * (float)delta;
+            newVelocity = direction * Speed * (float)delta;
         }
         else
         {
-            newVelocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-            newVelocity.Y = Mathf.MoveToward(newVelocity.Y, 0, Speed);
+            newVelocity = new Vector2(Mathf.MoveToward(Velocity.X, 0, Speed), Mathf.MoveToward(Velocity.Y, 0, Speed));
         }
 
         //Handle Rotations

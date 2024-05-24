@@ -1,0 +1,18 @@
+[gd_scene load_steps=6 format=3 uid="uid://krlsmg8vbqnr"]
+
+[ext_resource type="Script" path="res://scripts/AsteroidManager.cs" id="1_h2hwy"]
+[ext_resource type="PackedScene" uid="uid://e6s88d1tmbrw" path="res://scenes/asteroids/BigAsteroid.tscn" id="2_h0ift"]
+[ext_resource type="PackedScene" uid="uid://c3d6ry1c4vwwv" path="res://scenes/asteroids/MediumAsteroid.tscn" id="3_4eg10"]
+[ext_resource type="PackedScene" uid="uid://b7mad21b7jdhn" path="res://scenes/asteroids/SmallAsteroid.tscn" id="4_jf54h"]
+[ext_resource type="PackedScene" uid="uid://dmqjkarck0vab" path="res://scenes/asteroids/TinyAsteroid.tscn" id="5_fxf8e"]
+
+[node name="AsteroidManager" type="Node" node_paths=PackedStringArray("SpawnTimer")]
+script = ExtResource("1_h2hwy")
+BigAsteroid = ExtResource("2_h0ift")
+MediumAsteroid = ExtResource("3_4eg10")
+SmallAsteroid = ExtResource("4_jf54h")
+TinyAsteroid = ExtResource("5_fxf8e")
+SpawnTimer = NodePath("SpawnTimer")
+
+[node name="SpawnTimer" type="Timer" parent="."]
+autostart = true

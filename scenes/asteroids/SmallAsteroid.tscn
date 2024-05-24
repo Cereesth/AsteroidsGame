@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7mad21b7jdhn"]
+
+[ext_resource type="Script" path="res://scripts/Asteroid.cs" id="1_8xofa"]
+[ext_resource type="PackedScene" uid="uid://43fiwcoxhtas" path="res://scenes/HealthSystem.tscn" id="1_xwunk"]
+[ext_resource type="Texture2D" uid="uid://cth6lmhaw0dbk" path="res://assets/SpaceShooterRedux/PNG/Meteors/meteorBrown_small1.png" id="2_8oprp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oyd0w"]
+radius = 14.0
+
+[node name="SmallAsteroid" type="Area2D" node_paths=PackedStringArray("ColliderShape", "HealthSystem")]
+script = ExtResource("1_8xofa")
+ColliderShape = NodePath("CollisionShape2D")
+HealthSystem = NodePath("HealthSystem")
+_AsteroidType = 2
+
+[node name="HealthSystem" parent="." instance=ExtResource("1_xwunk")]
+MaxHealth = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_oyd0w")
+
+[node name="MeteorBrownSmall1" type="Sprite2D" parent="."]
+texture = ExtResource("2_8oprp")
